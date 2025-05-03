@@ -1,0 +1,14 @@
+<h1>Lista de Equipamentos</h1>
+<a href="{% url 'gerenciamento:novo_equipamento' %}">Novo Equipamento</a>
+<ul>
+  {% for equipamento in equipamentos %}
+    <li>
+      {{ equipamento.nome }} - {{ equipamento.grupo.nome }} -
+      {% if equipamento.disponivel %}
+        <a href="{% url 'gerenciamento:alugar_equipamento' equipamento.pk %}">Alugar</a>
+      {% else %}
+        <a href="{% url 'gerenciamento:devolver_equipamento' equipamento.pk %}">Devolver</a>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
