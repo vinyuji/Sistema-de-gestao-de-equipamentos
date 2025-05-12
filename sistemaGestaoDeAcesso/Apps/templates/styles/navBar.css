@@ -1,0 +1,61 @@
+/* Definindo o azul claro */
+:root {
+    --primary-blue: #5bb5f6; /* Azul claro */
+    --primary-blue-dark: #3da6fc; /* Azul mais escuro */
+    --white: #ffffff;
+  }
+  
+  /* Customização do Navbar */
+  body {
+    margin-top: 70px; /* Ajustando o corpo para não ficar embaixo do navbar fixo */
+    background-color: #F7F9FC; /* Cor de fundo bem suave para o corpo */
+    color: #333; /* Cor de texto padrão */
+  }
+  
+  /* Navbar principal */
+  .navbar-light {
+    background-color: var(--primary-blue) !important; /* Azul claro */
+    border-bottom: 2px solid #53d3f9; /* Borda inferior suave */
+  }
+  
+  .navbar-light .navbar-brand {
+    color: var(--white);
+  }
+  
+  .navbar-light .navbar-nav .nav-link {
+    color: var(--white);
+    transition: color 0.3s;
+  }
+  
+  .navbar-light .navbar-nav .nav-link:hover {
+    color: var(--primary-blue-dark); /* Azul mais escuro no hover */
+  }
+  
+  /* Personalizando o botão de pesquisa */
+  .btn-outline-lightblue {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+  }
+  
+  .btn-outline-lightblue:hover {
+    background-color: var(--primary-blue);
+    color: var(--white);
+  }
+  
+  /* Navbar secundário */
+  .navbar-light.bg-light {
+    margin-top: 70px; /* Ajustando a margem para não sobrepor ao navbar fixo */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: var(--white);
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .navbar-light.bg-light .nav-link {
+    color: #333;
+  }
+  
+  .navbar-light.bg-light .nav-link:hover {
+    color: var(--primary-blue-dark);
+  }
+  
