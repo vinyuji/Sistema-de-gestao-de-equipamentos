@@ -1,0 +1,45 @@
+/* navBarEsq.css */
+
+.sidebar {
+    position: fixed;
+    top: 70px; /* altura da navbar superior */
+    left: 0;
+    width: 220px;
+    height: calc(100vh - 80px);
+    background-color: #8a9a97;
+    border-right: 1px solid #d2e8ff;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  }
+  
+  .sidebar-header h2 {
+    font-size: 1.4rem;
+    color: #ffffff;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar-nav ul li {
+    margin: 15px 0;
+  }
+  
+  .sidebar-nav ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    display: block;
+    border-radius: 4px;
+  }
+  
+  .sidebar-nav ul li a:hover {
+    background-color: #8a9a97;
+    color: #002244;
+  }
+  

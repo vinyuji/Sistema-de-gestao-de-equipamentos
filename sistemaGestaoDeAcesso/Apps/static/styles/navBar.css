@@ -1,0 +1,123 @@
+/* navBar.css */
+
+/* Variáveis de cor */
+:root {
+  --blue-light: #7dbcf7;
+  --blue-hover: #cce7ff;
+  --blue-dark: #005fa3;
+  --border-color: #b3d9ff;
+  --font-color: #003366;
+}
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* NAVBAR PRIMÁRIA */
+.navbarPrimary {
+  background-color: var(--blue-light);
+  padding: 16px 24px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  border-bottom: 1px solid var(--border-color); /* Linha de separação */
+}
+
+.navDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.navbarBrand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--font-color);
+  text-decoration: none;
+}
+
+.navbarBrand:hover {
+  color: var(--blue-dark);
+}
+
+/* Formulário da busca */
+.formNav {
+  display: flex;
+  gap: 8px;
+}
+
+.inputNav {
+  padding: 6px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+.inputNav:focus {
+  border-color: var(--blue-dark);
+  box-shadow: 0 0 5px rgba(0, 95, 163, 0.3);
+}
+
+.buttonNav {
+  background-color: white;
+  color: var(--blue-dark);
+  border: 1px solid var(--blue-dark);
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.buttonNav:hover {
+  background-color: var(--blue-dark);
+  color: white;
+}
+
+/* NAVBAR SECUNDÁRIA */
+.navSec {
+  background-color: white;
+  padding: 12px 0;
+  margin-top: 80px; /* espaço para a navbar fixa */
+  border-bottom: 1px solid var(--border-color); /* Linha de separação */
+}
+
+.Container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.grupoNav {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  list-style: none;
+  padding: 0;
+}
+
+/* .navItem {} */
+
+.navLink {
+  text-decoration: none;
+  color: var(--font-color);
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navLink:hover {
+  background-color: var(--blue-hover);
+  color: var(--blue-dark);
+}

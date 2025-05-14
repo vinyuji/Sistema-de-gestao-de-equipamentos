@@ -10,8 +10,10 @@
     {% extends "base.html" %}
     {% block title %}Cadastro{% endblock %}
     {% block content %}
-    <h1>Cadastro</h1>
-    <p>Bem-vindo ao Cadastro</p>
+    {% include "./partials/navBarEsq.html" with pagina_nome="Cadastros" %}
+    <div class="Direita"></div>
+    
+
     {% endblock %}
 </body>
 </html>

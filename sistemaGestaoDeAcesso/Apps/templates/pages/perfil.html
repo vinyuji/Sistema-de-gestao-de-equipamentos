@@ -10,8 +10,7 @@
     {% extends "base.html" %}
     {% block title %}Home{% endblock %}
     {% block content %}
-    <h1>Perfil</h1>
-    <p>Bem-vindo ao Perfil</p>
+    {% include "./partials/navBarEsq.html" with pagina_nome="Perfil" %}
     {% endblock %}
 </body>
 </html>

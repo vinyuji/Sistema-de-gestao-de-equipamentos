@@ -1,28 +1,31 @@
 <!-- NAVBAR FIXA -->
-<nav class="navbar navbar-expand-lg navbar-light bg-lightblue shadow-sm fixed-top py-3">
-  <div class="container-fluid d-flex justify-content-between align-items-center">
-    <a class="navbar-brand" href="{% url 'home' %}">MeuSistema</a>
+<nav class="navbarPrimary">
+  <div class="navDiv">
+    <a class="navbarBrand" href="{% url 'home' %}">Gestao de Equipamentos</a>
 
-    <form class="d-flex" method="GET" action="{% url 'Search' %}">
-      <input class="form-control me-2" type="search" name="q" placeholder="Buscar..." aria-label="Buscar">
-      <button class="btn btn-outline-lightblue" type="submit">🔍</button>
+    <form class="formNav" method="GET" action="{% url 'Search' %}">
+      <input class="inputNav" type="search" name="q" placeholder="Buscar..." aria-label="Buscar">
+      <button class="buttonNav" type="submit">🔍</button>
     </form>
   </div>
 </nav>
 
 <!-- NAVBAR SECUNDÁRIO -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light mt-5 pt-2 pb-2">
-  <div class="container-fluid">
-    <ul class="navbar-nav mx-auto">
-      <li class="nav-item"><a class="nav-link" href="{% url 'Configuracoes' %}">Configurações</a></li>
-      <li class="nav-item"><a class="nav-link" href="{% url 'Perfil' %}">Perfil</a></li>
-      <li class="nav-item"><a class="nav-link" href="{% url 'Consultas' %}">Consultas</a></li>
-      <li class="nav-item"><a class="nav-link" href="{% url 'Cadastros' %}">Cadastros</a></li>
-      <li class="nav-item"><a class="nav-link" href="{% url 'Manual' %}">Manual</a></li>
+<nav class="navSec">
+  <div class="Container">
+    <ul class="grupoNav">
+      <li class="navItem"><a class="navLink" href="{% url 'Configuracoes' %}">Configurações</a></li>
+      <li class="navItem"><a class="navLink" href="{% url 'Perfil' %}">Perfil</a></li>
+      <li class="navItem"><a class="navLink" href="{% url 'Consultas' %}">Consultas</a></li>
+      <li class="navItem"><a class="navLink" href="{% url 'Cadastros' %}">Cadastros</a></li>
+      <li class="navItem"><a class="navLink" href="{% url 'Manual' %}">Manual</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- Link para o arquivo CSS -->
 
-<link rel="stylesheet" href="">
+
+
+<!-- Link do CSS personalizado -->
+{% load static %}
+<link rel="stylesheet" href="{% static 'styles/navBar.css' %}">
