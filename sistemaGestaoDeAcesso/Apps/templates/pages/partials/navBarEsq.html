@@ -1,11 +1,11 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'styles/navBarEsq.css' %}">
 
+
+<!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sidebar-header">
     <h2>{{ pagina_nome|default:"Seção" }}</h2>
   </div>
-
   <nav class="sidebar-nav">
     <ul>
       <li><a href="{% url 'Perfil' %}">Perfil</a></li>
