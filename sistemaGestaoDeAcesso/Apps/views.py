@@ -1,36 +1,15 @@
+# Dentro de Apps/views.py
 from django.shortcuts import render
+from .models import Equipamento
 
-def home(request):
-    return render(request, 'home.html')
+def listar_equipamentos(request):
+    # Busca todos os equipamentos no banco de dados
+    equipamentos = Equipamento.objects.all().order_by('nome')
 
-def configuracoes(request):
-    return render(request, 'configuracoes.html')
+    # O "contexto" é um dicionário que leva os dados para o template
+    contexto = {
+        'lista_de_equipamentos': equipamentos
+    }
 
-def perfil(request):
-    return render(request, 'perfil.html')
-
-def consultas(request):
-    return render(request, 'consultas.html')
-
-def cadastros(request):
-    return render(request, 'cadastros.html')
-
-def manual(request):
-    return render(request, 'manual.html')
-
-def equipamentos(request):
-    return render(request, 'equipamentos.html')
-
-def exclusao(request):
-    return render(request, 'exclusao.html')
-
-def historico(request):
-    return render(request, 'historico.html')
-
-def solicitacoes(request):
-    return render(request, 'solicitacoes.html')
-
-
-def search(request):
-    query = request.GET.get('q', '')
-    return render(request, 'search.html', {'query': query})
+    # Renderiza o arquivo HTML, enviando o contexto para ele
+    return render(request, 'Apps/listar_equipamentos.html', contexto)

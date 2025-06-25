@@ -3,14 +3,5 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('configuracoes/', views.configuracoes, name='Configuracoes'),
-    path('perfil/', views.perfil, name='Perfil'),
-    path('consultas/', views.consultas, name='Consultas'),
-    path('cadastros/', views.cadastros, name='Cadastros'),
-    path('manual/', views.manual, name='Manual'),
-    path('search/', views.search, name='Search'),
-    path('equipamentos/', views.search, name='Equipamentos'),
-    path('exclusao/', views.search, name='Exclusao'),
-    path('historicos/', views.historico, name='Historicos'),
-    path('solicitacoes/', views.solicitacoes, name='Solicitacoes'),
+    path('equipamentos/', views.listar_equipamentos, name='lista_equipamentos'),
 ]
