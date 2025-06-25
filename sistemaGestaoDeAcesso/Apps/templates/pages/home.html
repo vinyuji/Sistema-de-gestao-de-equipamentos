@@ -3,12 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/home.css">
     <title>Home</title>
+
+    <!-- Estilo da navbar -->
+    <link rel="stylesheet" href="../styles/navBar.css">
+    <!-- Estilo da home -->
+    <link rel="stylesheet" href="../styles/home.css">
 </head>
 <body>
-    <h1>
-        hello word
-    </h1>
+
+{% extends 'partials/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Hello world</h1>
+{% endblock %}
+
 </body>
 </html>

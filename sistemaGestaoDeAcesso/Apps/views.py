@@ -12,4 +12,22 @@ def listar_equipamentos(request):
     }
 
     # Renderiza o arquivo HTML, enviando o contexto para ele
-    return render(request, 'Apps/listar_equipamentos.html', contexto)
+    return render(request, 'pages/listarEquipamentos.html', contexto)
+
+def home(request):
+    return render(request, 'pages/home.html')
+
+def pesquisar(request):
+    return render(request, 'pages/home.html')
+
+def historico(request):
+    return render(request, 'pages/home.html')
+
+def perfil(request):
+    return render(request, 'pages/home.html')
+
+def configuracao(request):
+    return render(request, 'pages/home.html')
+
+def acessibilidade(request):
+    return render(request, 'pages/home.html')

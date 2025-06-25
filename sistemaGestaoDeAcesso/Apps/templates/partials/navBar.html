@@ -1,0 +1,17 @@
+<!-- templates/partials/navbar.html -->
+<nav class="navbar">
+    <div class="navbar-container">
+        <div class="brand">
+            <a href="{% url 'home' %}">Sistema de Gestão</a>
+        </div>
+
+
+        <ul class="nav-links">
+            <li><a href="{% url 'pesquisar' %}">Pesquisar</a></li>
+            <li><a href="{% url 'historico' %}">Histórico</a></li>
+            <li><a href="{% url 'perfil' %}">Perfil</a></li>
+            <li><a href="{% url 'acessibilidade' %}">Acessibilidade</a></li>
+            <li><a href="{% url 'configuracao' %}">Configuração</a></li>
+        </ul>
+    </div>
+</nav>
