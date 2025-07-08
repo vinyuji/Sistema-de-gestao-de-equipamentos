@@ -1,0 +1,77 @@
+/* historico.css */
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    margin: 20px 0;
+    color: #333;
+    font-size: 26px;
+    text-align: center;
+}
+
+/* Estilo da tabela */
+.scrollable-table {
+    max-height: 500px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin: 0 auto;
+    width: 95%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+thead {
+    background-color: #007bff;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+thead th {
+    padding: 14px;
+    text-align: left;
+    font-weight: 600;
+}
+
+tbody td {
+    padding: 12px;
+    border-top: 1px solid #eee;
+    color: #444;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #e6f3ff;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    table {
+        font-size: 13px;
+    }
+
+    thead th,
+    tbody td {
+        padding: 8px;
+    }
+
+    .scrollable-table {
+        max-height: 350px;
+    }
+}

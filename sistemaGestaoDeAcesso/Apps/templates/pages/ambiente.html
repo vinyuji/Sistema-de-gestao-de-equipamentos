@@ -1,0 +1,107 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'styles/ambiente.css' %}">
+
+<h2>Listar Ambientes</h2>
+
+<form method="get" class="search-form" style="margin-bottom: 15px;">
+    <input type="text" name="nome" placeholder="Pesquisar por nome" value="{{ request.GET.nome|default:'' }}">
+    <button type="submit">🔎 Buscar</button>
+</form>
+
+<div class="scrollable-table">
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Total Equipamentos</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ambiente in ambientes %}
+            <tr class="clickable-row"
+                data-nome="{{ ambiente.nome }}"
+                data-descricao="{{ ambiente.descricao|default:'(sem descrição)' }}"
+                data-equipamentos='[
+                    {% for ae in ambiente.ambienteequipamento_set.all %}
+                        {"nome": "{{ ae.equipamento.nome }}", "codigo": "{{ ae.equipamento.codigo_patrimonio }}", "categoria": "{{ ae.equipamento.categoria.nome }}", "quantidade": {{ ae.quantidade }} }
+                        {% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                ]'>
+                <td>{{ ambiente.nome }}</td>
+                <td>{{ ambiente.descricao|default:"-" }}</td>
+                <td>{{ ambiente.ambienteequipamento_set.count }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">Nenhum ambiente cadastrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal Detalhes do Ambiente -->
+<div id="ambienteModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Detalhes do Ambiente</h3>
+        <p><strong>Nome:</strong> <span id="modal-nome"></span></p>
+        <p><strong>Descrição:</strong> <span id="modal-descricao"></span></p>
+        <h4>Equipamentos neste ambiente:</h4>
+        <ul id="modal-equipamentos-lista">
+            <!-- Aqui serão listados os equipamentos -->
+        </ul>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const rows = document.querySelectorAll(".clickable-row");
+    const modal = document.getElementById("ambienteModal");
+    const closeBtn = modal.querySelector(".close");
+
+    rows.forEach(row => {
+        row.addEventListener("click", () => {
+            // Preenche informações básicas
+            document.getElementById("modal-nome").innerText = row.dataset.nome;
+            document.getElementById("modal-descricao").innerText = row.dataset.descricao;
+
+            // Parse da lista JSON dos equipamentos
+            let equipamentos = [];
+            try {
+                equipamentos = JSON.parse(row.dataset.equipamentos.replace(/'/g, '"'));
+            } catch(e) {
+                equipamentos = [];
+            }
+
+            const lista = document.getElementById("modal-equipamentos-lista");
+            lista.innerHTML = '';
+
+            if(equipamentos.length === 0){
+                lista.innerHTML = '<li><em>Não há equipamentos cadastrados neste ambiente.</em></li>';
+            } else {
+                equipamentos.forEach(eq => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `<strong>${eq.nome}</strong> (Código: ${eq.codigo}) - Categoria: ${eq.categoria} - Quantidade: ${eq.quantidade}`;
+                    lista.appendChild(li);
+                });
+            }
+
+            modal.style.display = "block";
+        });
+    });
+
+    closeBtn.onclick = () => modal.style.display = "none";
+    window.onclick = event => {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    };
+});
+</script>
+
+{% endblock %}

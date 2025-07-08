@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
 
+    
+    {% extends 'partials/base.html' %}
+    {% load static %}
     <!-- Estilo da navbar -->
-    <link rel="stylesheet" href="../styles/navBar.css">
+    <link rel="stylesheet" href="{% static 'styles/navBar.css' %}">
     <!-- Estilo da home -->
-    <link rel="stylesheet" href="../styles/home.css">
+    <link rel="stylesheet" href="{% static 'styles/home.css' %}">
 </head>
 <body>
 
-{% extends 'partials/base.html' %}
 
 {% block title %}Home{% endblock %}
 

@@ -1,41 +1,109 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de Equipamentos</title>
-    <style>
-        body { font-family: sans-serif; margin: 2em; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        tr:nth-child(even) { background-color: #f9f9f9; }
-    </style>
-</head>
-<body>
-    <h1>Equipamentos Disponíveis</h1>
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'styles/listarEquipamentos.css' %}">
+
+<h2>Pesquisar Equipamentos</h2>
+
+<form method="get" class="search-form">
+    <input type="text" name="nome" placeholder="Nome do Equipamento" value="{{ valores.nome }}">
+    <input type="text" name="codigo" placeholder="Código de Patrimônio" value="{{ valores.codigo }}">
+
+    <select name="categoria">
+        <option value="">Todas as Categorias</option>
+        {% for cat in categorias %}
+        <option value="{{ cat.id }}" {% if valores.categoria_id == cat.id|stringformat:"s" %}selected{% endif %}>
+            {{ cat.nome }} ({{ cat.total_disponivel }} disponíveis)
+        </option>
+        {% endfor %}
+    </select>
+
+    <select name="status">
+        <option value="">Todos os Status</option>
+        {% for key, val in status_choices %}
+        <option value="{{ key }}" {% if valores.status == key %}selected{% endif %}>{{ val }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">🔎 Buscar</button>
+</form>
+
+<div class="scrollable-table">
     <table>
         <thead>
             <tr>
-                <th>Nome do Equipamento</th>
-                <th>Código de Patrimônio</th>
+                <th>Nome</th>
+                <th>Código</th>
                 <th>Categoria</th>
                 <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            {% for equipamento in lista_de_equipamentos %}
-            <tr>
-                <td>{{ equipamento.nome }}</td>
-                <td>{{ equipamento.codigo_patrimonio }}</td>
-                <td>{{ equipamento.categoria.nome }}</td>
-                <td>{{ equipamento.get_status_display }}</td>
+            {% for eq in equipamentos %}
+            <tr class="clickable-row"
+                data-nome="{{ eq.nome }}"
+                data-codigo="{{ eq.codigo_patrimonio }}"
+                data-categoria="{{ eq.categoria.nome }}"
+                data-status="{{ eq.get_status_display }}"
+                data-disponivel="{% if eq.status == 'DISPONIVEL' %}True{% else %}False{% endif %}">
+                <td>{{ eq.nome }}</td>
+                <td>{{ eq.codigo_patrimonio }}</td>
+                <td>{{ eq.categoria.nome }}</td>
+                <td>{{ eq.get_status_display }}</td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="4">Nenhum equipamento cadastrado.</td>
+                <td colspan="4">Nenhum equipamento encontrado com os filtros informados.</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-</body>
-</html>
+</div>
+
+<!-- 🔽 MODAL DETALHES -->
+<div id="equipModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Detalhes do Equipamento</h3>
+        <p><strong>Nome:</strong> <span id="modal-nome"></span></p>
+        <p><strong>Código:</strong> <span id="modal-codigo"></span></p>
+        <p><strong>Categoria:</strong> <span id="modal-categoria"></span></p>
+        <p><strong>Status:</strong> <span id="modal-status"></span></p>
+
+        <div id="modal-disponivel">
+            <button class="btn-reservar">Reservar Equipamento</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const rows = document.querySelectorAll(".clickable-row");
+        const modal = document.getElementById("equipModal");
+        const closeBtn = modal.querySelector(".close");
+        const modalDisponivel = document.getElementById("modal-disponivel");
+
+        rows.forEach(row => {
+            row.addEventListener("click", () => {
+                document.getElementById("modal-nome").innerText = row.dataset.nome;
+                document.getElementById("modal-codigo").innerText = row.dataset.codigo;
+                document.getElementById("modal-categoria").innerText = row.dataset.categoria;
+                document.getElementById("modal-status").innerText = row.dataset.status;
+
+                const isDisponivel = row.dataset.disponivel === "True";
+                modalDisponivel.style.display = isDisponivel ? "block" : "none";
+
+                modal.style.display = "block";
+            });
+        });
+
+        closeBtn.onclick = () => modal.style.display = "none";
+        window.onclick = event => {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        };
+    });
+</script>
+{% endblock %}

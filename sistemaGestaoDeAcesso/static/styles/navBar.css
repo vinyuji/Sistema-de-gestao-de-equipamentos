@@ -7,7 +7,7 @@
 
 /* Navbar principal */
 .navbar {
-    background-color: #e6f2ff;
+    background-color: #007bff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     font-family: Arial, sans-serif;
 }
@@ -26,7 +26,7 @@
 .brand a {
     font-size: 1.5 rem;
     font-weight: bold;
-    color: #0066cc;
+    color: #ffffff;
     text-decoration: none;
 }
 
@@ -39,14 +39,14 @@
 
 .nav-links li a {
     text-decoration: none;
-    color: #004080;
+    color: #ffffff;
     font-weight: 500;
     padding: 0.5rem 0.8rem;
     transition: background 0.3s;
 }
 
 .nav-links li a:hover {
-    background-color: #cce6ff;
+    background-color: #78ddff;
     border-radius: 5px;
 }
 

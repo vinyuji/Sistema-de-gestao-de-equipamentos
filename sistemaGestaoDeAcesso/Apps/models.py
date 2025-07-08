@@ -17,12 +17,6 @@ class Usuario(AbstractUser):
         verbose_name='Tipo de Usuário'
     )
 
-class Ambiente(models.Model):
-    nome = models.CharField(max_length=100, unique=True)
-    descricao = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return self.nome
 
 class CategoriaEquipamento(models.Model):
     nome = models.CharField(max_length=100, unique=True)
@@ -32,7 +26,7 @@ class CategoriaEquipamento(models.Model):
 
     def __str__(self):
         return self.nome
-
+    
 class Equipamento(models.Model):
     class Status(models.TextChoices):
         DISPONIVEL = 'DISPONIVEL', 'Disponível'
@@ -46,6 +40,28 @@ class Equipamento(models.Model):
     
     def __str__(self):
         return f"{self.nome} ({self.codigo_patrimonio})"
+
+
+
+class Ambiente(models.Model):
+    nome = models.CharField(max_length=100, unique=True)
+    descricao = models.TextField(blank=True, null=True)
+    equipamentos = models.ManyToManyField('Equipamento', through='AmbienteEquipamento', related_name='ambientes')
+
+    def __str__(self):
+        return self.nome
+    
+class AmbienteEquipamento(models.Model):
+    ambiente = models.ForeignKey(Ambiente, on_delete=models.CASCADE)
+    equipamento = models.ForeignKey(Equipamento, on_delete=models.CASCADE)
+    quantidade = models.PositiveIntegerField(default=1)  
+
+    class Meta:
+        unique_together = ('ambiente', 'equipamento')
+
+    def __str__(self):
+        return f"{self.equipamento.nome} em {self.ambiente.nome} (Qtd: {self.quantidade})"
+
 
 class Reserva(models.Model):
     class Status(models.TextChoices):
