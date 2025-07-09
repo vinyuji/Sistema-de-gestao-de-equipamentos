@@ -21,6 +21,10 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = 'perfil'
+LOGOUT_REDIRECT_URL = 'login'
+
 
 
 # Quick-start development settings - unsuitable for production

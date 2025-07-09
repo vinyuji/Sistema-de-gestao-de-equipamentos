@@ -6,13 +6,18 @@ from .models import Usuario, Ambiente, Equipamento, CategoriaEquipamento, Ambien
 @admin.register(Usuario)
 class CustomUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
-        ('Informações adicionais', {'fields': ('tipo_usuario',)}),
+        ('Informações adicionais', {
+            'fields': ('tipo_usuario', 'cpf', 'cep', 'numero_matricula', 'numero_telefone')
+        }),
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
-        ('Informações adicionais', {'fields': ('tipo_usuario',)}),
+        ('Informações adicionais', {
+            'fields': ('tipo_usuario', 'cpf', 'cep', 'numero_matricula', 'numero_telefone')
+        }),
     )
-    list_display = ('username', 'email', 'tipo_usuario', 'is_staff')
-    list_filter = ('tipo_usuario', 'is_staff')
+
+    list_display = ('username', 'email', 'tipo_usuario', 'cpf', 'numero_matricula')
+    search_fields = ('username', 'email', 'cpf', 'numero_telefone')
 
 
 # Equipamento

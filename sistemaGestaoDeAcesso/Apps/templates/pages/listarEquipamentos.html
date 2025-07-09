@@ -42,6 +42,7 @@
         <tbody>
             {% for eq in equipamentos %}
             <tr class="clickable-row"
+                data-id="{{ eq.id }}"
                 data-nome="{{ eq.nome }}"
                 data-codigo="{{ eq.codigo_patrimonio }}"
                 data-categoria="{{ eq.categoria.nome }}"
@@ -71,8 +72,20 @@
         <p><strong>Categoria:</strong> <span id="modal-categoria"></span></p>
         <p><strong>Status:</strong> <span id="modal-status"></span></p>
 
-        <div id="modal-disponivel">
-            <button class="btn-reservar">Reservar Equipamento</button>
+        <div id="modal-disponivel" style="display:none;">
+            <form id="reserva-form" method="POST" action="{% url 'reservar_equipamento' %}">
+                {% csrf_token %}
+                <input type="hidden" name="equipamento_id" id="input-equipamento-id">
+                <label for="ambiente_id">Ambiente de uso (opcional):</label>
+                <select name="ambiente_id">
+                    <option value="">Uso pessoal</option>
+                    {% for ambiente in ambientes %}
+                    <option value="{{ ambiente.id }}">{{ ambiente.nome }}</option>
+                    {% endfor %}
+                </select>
+                <br><br>
+                <button type="submit" class="btn-reservar">Reservar Equipamento</button>
+            </form>
         </div>
     </div>
 </div>
@@ -83,6 +96,7 @@
         const modal = document.getElementById("equipModal");
         const closeBtn = modal.querySelector(".close");
         const modalDisponivel = document.getElementById("modal-disponivel");
+        const inputEquipId = document.getElementById("input-equipamento-id");
 
         rows.forEach(row => {
             row.addEventListener("click", () => {
@@ -93,6 +107,7 @@
 
                 const isDisponivel = row.dataset.disponivel === "True";
                 modalDisponivel.style.display = isDisponivel ? "block" : "none";
+                inputEquipId.value = row.dataset.id;
 
                 modal.style.display = "block";
             });

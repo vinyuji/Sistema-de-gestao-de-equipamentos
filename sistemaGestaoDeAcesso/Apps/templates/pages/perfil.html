@@ -1,0 +1,230 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}Perfil do Usuário{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'styles/perfil.css' %}">
+<link rel="stylesheet" href="{% static 'styles/navBar.css' %}">
+<link rel="stylesheet" href="{% static 'styles/home.css' %}">
+
+<style>
+    .perfil-container {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .perfil-info {
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .perfil-info p {
+        margin-bottom: 10px;
+    }
+
+    .reservas-historico {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .reservas-card, .historico-card {
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        overflow-x: auto;
+    }
+
+    .reservas-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .reservas-table th, .reservas-table td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .reservas-table th {
+        background-color: #f4f4f4;
+        text-align: left;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+        background-color: #fff;
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 10px;
+        width: 60%;
+    }
+
+    .close {
+        float: right;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .btn-sair {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background-color: #e74c3c;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+    }
+
+    .btn-sair:hover {
+        background-color: #c0392b;
+    }
+</style>
+
+<div class="perfil-container">
+    <!-- Perfil -->
+    <div class="perfil-info">
+        <h2>👤 Meu Perfil</h2>
+        <p><strong>Usuário:</strong> {{ user.username }}</p>
+        <p><strong>Nome completo:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+        <p><strong>E-mail:</strong> {{ user.email }}</p>
+        <p><strong>CPF:</strong> {{ user.cpf }}</p>
+        <p><strong>CEP:</strong> {{ user.cep }}</p>
+        <p><strong>Matrícula:</strong> {{ user.numero_matricula }}</p>
+        <p><strong>Número:</strong> {{ user.numero_residencia }}</p>
+        <p><strong>Tipo de usuário:</strong> {{ user.get_tipo_usuario_display }}</p>
+
+        <a href="{% url 'logout' %}" class="btn-sair">Sair da conta</a>
+    </div>
+
+    <!-- Reservas e Histórico -->
+    <div class="reservas-historico">
+        <!-- Reservas Ativas -->
+        <div class="reservas-card">
+            <h3>📌 Reservas Ativas</h3>
+            <table class="reservas-table">
+                <thead>
+                    <tr>
+                        <th>Equipamento</th>
+                        <th>Data da Solicitação</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reserva in reservas %}
+                    <tr class="clickable-row"
+                        data-id="{{ reserva.id }}"
+                        data-equipamento="{{ reserva.equipamento.nome }}"
+                        data-data="{{ reserva.data_solicitacao }}"
+                        data-status="{{ reserva.get_status_display }}"
+                        data-ambiente="{% if reserva.ambiente_uso %}{{ reserva.ambiente_uso.nome }}{% else %}Uso pessoal{% endif %}"
+                        data-finalizada="{{ reserva.data_finalizacao|default_if_none:'' }}">
+                        <td>{{ reserva.equipamento.nome }}</td>
+                        <td>{{ reserva.data_solicitacao }}</td>
+                        <td>{{ reserva.get_status_display }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="3">Nenhuma reserva ativa.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Histórico de Reservas -->
+        <div class="historico-card">
+            <h3>📚 Histórico de Reservas</h3>
+            <table class="reservas-table">
+                <thead>
+                    <tr>
+                        <th>Equipamento</th>
+                        <th>Data da Solicitação</th>
+                        <th>Data de Finalização</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reserva in historico %}
+                    <tr>
+                        <td>{{ reserva.equipamento.nome }}</td>
+                        <td>{{ reserva.data_solicitacao }}</td>
+                        <td>{{ reserva.data_finalizacao }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="3">Nenhuma reserva finalizada.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="reservaModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Detalhes da Reserva</h3>
+        <p><strong>Equipamento:</strong> <span id="modal-equipamento"></span></p>
+        <p><strong>Data da Solicitação:</strong> <span id="modal-data"></span></p>
+        <p><strong>Status:</strong> <span id="modal-status"></span></p>
+        <p><strong>Ambiente de Uso:</strong> <span id="modal-ambiente"></span></p>
+        <p><strong>Data de Finalização:</strong> <span id="modal-finalizada"></span></p>
+
+        <form id="finalizarReservaForm" method="POST" action="{% url 'finalizar_reserva' %}">
+            {% csrf_token %}
+            <input type="hidden" name="reserva_id" id="reserva-id-input" value="">
+            <button type="submit" id="btn-finalizar" style="display:none;">Finalizar Reserva</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const rows = document.querySelectorAll(".clickable-row");
+        const modal = document.getElementById("reservaModal");
+        const closeBtn = modal.querySelector(".close");
+
+        rows.forEach(row => {
+            row.addEventListener("click", () => {
+                const status = row.dataset.status.toLowerCase();
+                const finalizada = row.dataset.finalizada;
+
+                document.getElementById("modal-equipamento").innerText = row.dataset.equipamento;
+                document.getElementById("modal-data").innerText = row.dataset.data;
+                document.getElementById("modal-status").innerText = row.dataset.status;
+                document.getElementById("modal-ambiente").innerText = row.dataset.ambiente;
+                document.getElementById("modal-finalizada").innerText = finalizada || "Ainda não finalizada";
+                document.getElementById("reserva-id-input").value = row.dataset.id;
+
+                // Mostrar botão "Finalizar" apenas se ainda não foi finalizada
+                document.getElementById("btn-finalizar").style.display = finalizada ? "none" : "inline-block";
+
+                modal.style.display = "block";
+            });
+        });
+
+        closeBtn.onclick = () => modal.style.display = "none";
+        window.onclick = event => {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        };
+    });
+</script>
+
+{% endblock %}

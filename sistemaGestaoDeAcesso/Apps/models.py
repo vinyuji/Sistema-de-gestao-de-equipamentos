@@ -17,6 +17,14 @@ class Usuario(AbstractUser):
         verbose_name='Tipo de Usuário'
     )
 
+    cpf = models.CharField(max_length=14, unique=True, verbose_name='CPF')  # Ex: 000.000.000-00
+    cep = models.CharField(max_length=9, verbose_name='CEP')               # Ex: 00000-000
+    numero_matricula = models.CharField(max_length=20, unique=True, verbose_name='Matrícula')
+    numero_telefone = models.CharField(max_length=10, verbose_name='Número de telefone')
+
+    def __str__(self):
+        return self.username
+
 
 class CategoriaEquipamento(models.Model):
     nome = models.CharField(max_length=100, unique=True)
