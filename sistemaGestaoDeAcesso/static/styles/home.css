@@ -1,0 +1,67 @@
+/* static/styles/home.css */
+
+.home-container {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.home-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.home-header h1 {
+    font-size: 2.8em;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.home-header p {
+    font-size: 1.2em;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.home-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 50px;
+}
+
+.card-link {
+    display: block;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    text-decoration: none;
+    color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.card-link:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-icon {
+    font-size: 3em; /* Tamanho do emoji/ícone */
+    margin-bottom: 15px;
+}
+
+.card-link h3 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.card-link p {
+    font-size: 1em;
+    color: #555;
+    line-height: 1.5;
+}

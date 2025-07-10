@@ -1,26 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+{% extends 'partials/base.html' %}
+{% load static %}
 
-    
-    {% extends 'partials/base.html' %}
-    {% load static %}
-    <!-- Estilo da navbar -->
-    <link rel="stylesheet" href="{% static 'styles/navBar.css' %}">
-    <!-- Estilo da home -->
-    <link rel="stylesheet" href="{% static 'styles/home.css' %}">
-</head>
-<body>
-
-
-{% block title %}Home{% endblock %}
+{% block title %}Bem-vindo ao Sistema de Reservas{% endblock %}
 
 {% block content %}
-    <h1>Hello world</h1>
-{% endblock %}
+<link rel="stylesheet" href="{% static 'styles/home.css' %}">
+<link rel="stylesheet" href="{% static 'styles/navBar.css' %}">
 
-</body>
-</html>
+<style>
+/* static/styles/home.css */
+
+.home-container {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.home-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.home-header h1 {
+    font-size: 2.8em;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.home-header p {
+    font-size: 1.2em;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.home-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 50px;
+}
+
+.card-link {
+    display: block;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    text-decoration: none;
+    color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.card-link:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-icon {
+    font-size: 3em; /* Tamanho do emoji/ícone */
+    margin-bottom: 15px;
+}
+
+.card-link h3 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.card-link p {
+    font-size: 1em;
+    color: #555;
+    line-height: 1.5;
+}
+
+
+</style>
+
+<div class="home-container">
+    <header class="home-header">
+        <h1>Sistema de Gestão de Equipamentos</h1>
+        <p>Bem-vindo! Reserve equipamentos de forma rápida e eficiente, visualize seu histórico e gerencie seu perfil em um só lugar.</p>
+    </header>
+
+    <div class="home-cards-container">
+        <a href="{% url 'equipamentos' %}" class="card-link">
+            <div class="card-icon">💻</div>
+            <h3>Ver Equipamentos</h3>
+            <p>Navegue pela lista de equipamentos disponíveis, verifique o status e faça sua reserva com apenas alguns cliques.</p>
+        </a>
+
+        <a href="{% url 'perfil' %}" class="card-link">
+            <div class="card-icon">👤</div>
+            <h3>Meu Perfil</h3>
+            <p>Acesse seu perfil para visualizar suas reservas ativas, conferir seu histórico pessoal e gerenciar seus dados.</p>
+        </a>
+
+        <a href="{% url 'historico' %}" class="card-link">
+            <div class="card-icon">📚</div>
+            <h3>Histórico Geral</h3>
+            <p>Consulte o histórico completo de todas as reservas já realizadas no sistema, com filtros para facilitar a busca.</p>
+        </a>
+    </div>
+</div>
+
+{% endblock %}

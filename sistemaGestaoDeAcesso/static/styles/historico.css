@@ -60,6 +60,7 @@ tbody tr:hover {
     background-color: #e6f3ff;
 }
 
+
 /* Responsividade */
 @media (max-width: 768px) {
     table {

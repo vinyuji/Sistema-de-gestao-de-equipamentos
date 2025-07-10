@@ -8,12 +8,71 @@
 <link rel="stylesheet" href="{% static 'styles/navBar.css' %}">
 <link rel="stylesheet" href="{% static 'styles/home.css' %}">
 
+<style>
+    /* Estilos para o formulário de filtro */
+    .filter-form {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: flex;
+        gap: 15px;
+        align-items: flex-end;
+        flex-wrap: wrap;
+    }
+    .filter-form .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+    .filter-form label {
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .filter-form input {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    .filter-form button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .filter-form button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
 <h2>📅 Histórico de Reservas</h2>
+
+<form method="GET" action="{% url 'historico' %}" class="filter-form">
+    <div class="form-group">
+        <label for="equipamento">Nome do Equipamento:</label>
+        <input type="text" name="equipamento" id="equipamento" value="{{ valores_filtro.equipamento }}">
+    </div>
+    <div class="form-group">
+        <label for="solicitante">Nome do Solicitante:</label>
+        <input type="text" name="solicitante" id="solicitante" value="{{ valores_filtro.solicitante }}">
+    </div>
+    <div class="form-group">
+        <label for="reserva_id">ID da Reserva:</label>
+        <input type="text" name="reserva_id" id="reserva_id" value="{{ valores_filtro.reserva_id }}">
+    </div>
+    <button type="submit">Filtrar</button>
+</form>
+
 
 <div class="scrollable-table">
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Equipamento</th>
                 <th>Solicitante</th>
                 <th>Ambiente</th>
@@ -26,6 +85,7 @@
         <tbody>
             {% for r in reservas %}
             <tr>
+                <td>{{ r.id }}</td>
                 <td>{{ r.equipamento.nome }}</td>
                 <td>{{ r.solicitante.username }}</td>
                 <td>
@@ -42,7 +102,7 @@
             </tr>
             {% empty %}
             <tr>
-                <td colspan="7">Nenhuma reserva registrada.</td>
+                <td colspan="8">Nenhuma reserva encontrada com os filtros aplicados.</td>
             </tr>
             {% endfor %}
         </tbody>

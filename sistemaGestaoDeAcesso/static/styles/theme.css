@@ -1,0 +1,59 @@
+/* static/styles/theme.css */
+
+/* Define variáveis de cor para o tema padrão */
+:root {
+    --bg-color: #f4f7f6;
+    --card-bg-color: #ffffff;
+    --text-color: #333333;
+    --primary-color: #007bff;
+    --border-color: #ddd;
+    --link-color: #ffffff;
+}
+
+/* Aplica as variáveis ao corpo do site */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* ================================================= */
+/* FONTES (Controlado pelo JavaScript)               */
+/* ================================================= */
+body.font-small { font-size: 14px; }
+body.font-medium { font-size: 16px; } /* Padrão */
+body.font-large { font-size: 18px; }
+
+
+/* ================================================= */
+/* TEMAS (Controlado pelo JavaScript)                */
+/* ================================================= */
+
+/* Tema de Alto Contraste */
+body.theme-high-contrast {
+    --bg-color: #000000;
+    --card-bg-color: #1a1a1a;
+    --text-color: #ffffff;
+    --primary-color: #ffff00; /* Amarelo para destaque */
+    --border-color: #555555;
+    --link-color: #ffff00;
+}
+
+/* Garante que os componentes do site usem as variáveis */
+.card-link, .config-card, .perfil-info, .reservas-card, .historico-card, .filter-form {
+    background-color: var(--card-bg-color) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--border-color);
+}
+
+h1, h2, h3, h4, strong {
+    color: var(--text-color) !important;
+}
+
+a {
+    color: var(--link-color) !important;
+}
+
+button, .btn-sair, .btn-logout {
+    background-color: var(--primary-color) !important;
+    color: var(--bg-color) !important;
+}
